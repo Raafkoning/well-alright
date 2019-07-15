@@ -15,7 +15,6 @@ export default class PortfolioContainer extends Component {
     };
 
     this.handleFilter = this.handleFilter.bind(this);
-    this.getPortfolioItems = this.getPortfolioItems.bind(this);
   }
 
   handleFilter(filter) {
@@ -33,7 +32,7 @@ export default class PortfolioContainer extends Component {
         console.log("response data", response);
         this.setState({
           data: response.data.portfolio_items
-        })
+        });
       })
       .catch(error => {
         console.log(error);
@@ -42,7 +41,7 @@ export default class PortfolioContainer extends Component {
 
   portfolioItems() {
     return this.state.data.map(item => {
-      return <PortfolioItem key={item.id} title={item.name} url={item.url} slug={item.id} />;
+      return <PortfolioItem key={item.id} item={item} />;
     });
   }
 
@@ -54,9 +53,6 @@ export default class PortfolioContainer extends Component {
       if (this.state.isLoading){
           return <div>Loading...</div>;
       }
-
-      this.getPortfolioItems();
-
     
     return (
       <div>
@@ -72,7 +68,7 @@ export default class PortfolioContainer extends Component {
           Enterprise
         </button>
 
-        {this.portfolioItems()}
+        <div className="portfolio-items-wrapper">{this.portfolioItems()}</div>
       </div>
     );
   }
